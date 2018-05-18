@@ -14,10 +14,11 @@ Board::Board() {
     generateBoard();
 }
 
-Board::Board(unsigned int size) {
-    _board.reserve(size);
-    for(auto& x : _board) {
-        x.reserve(size);
+Board::Board(unsigned int x, unsigned int y) {
+    _board.reserve(y);
+    for(int i = 0; i<_board.size(); ++i)
+    {
+        _board[i].reserve(x);
     }
 }
 
@@ -36,12 +37,13 @@ std::string Board::display() {
     return s.str();
 }
 
-void Board::replace(Position position, Characters character) {
+bool Board::replace(Position position, Characters character) {
     if(position.getY() >=_board.size() || position.getX() >= _board[0].size())
-        return;
-    if(Characters::WALL != _board[position.getX()][position.getY()])
+        return false;
+    if(Characters::WALL != _board[position.getX()][position.getY()]) {
         _board[position.getY()][position.getX()] = character;
-
+        return true;
+    }
 }
 
 void Board::generateBoard() {

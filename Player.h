@@ -8,22 +8,18 @@
 
 #include "Utilities.h"
 
-enum KeyCode
-{
-    KEY_A = '0x41',
-    KEY_W = '0x57',
-    KEY_S = '0x53',
-    KEY_D = '0x44'
-};
+
 
 class Player {
 private:
     Position _playerPosition;
     Characters _playerCharacter = Characters::PACMAN;
 public:
-    Position direction(KeyCode code);
+    void move(KeyCode code);
     Position getPosition();
+    void setPosition(Position direction);
     Player(Position position) : _playerPosition(position){};
+    Characters getPlayerCharacter();
 };
 
 

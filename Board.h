@@ -16,9 +16,9 @@ private:
     std::vector<std::vector<char>> _board;
 public:
     Board();
-    Board(unsigned int size);
+    Board(unsigned int x, unsigned int y);
     std::string display();
-    void replace(Position position, Characters character);
+    bool replace(Position position, Characters character);
     void generateBoard();
 };
 

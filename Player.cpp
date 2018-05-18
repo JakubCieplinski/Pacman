@@ -4,20 +4,32 @@
 
 #include "Player.h"
 
-Position Player::direction(KeyCode code) {
+void Player::move(KeyCode code) {
     switch(code)
     {
         case KeyCode::KEY_A:
-            return Position{-1,0};
+            setPosition(Position{-1,0});
+            break;
         case KeyCode::KEY_D:
-            return Position{1,0};
+            setPosition(Position{1,0});
+            break;
         case KeyCode::KEY_W:
-            return Position{0,-1};
+            setPosition(Position{0,-1});
+            break;
         case KeyCode::KEY_S:
-            return Position{0,1};
+            setPosition(Position{0,1});
+            break;
     }
 }
 
 Position Player::getPosition() {
     return _playerPosition;
+}
+
+void Player::setPosition(Position direction) {
+    _playerPosition += direction;
+}
+
+Characters Player::getPlayerCharacter() {
+    return _playerCharacter;
 }
