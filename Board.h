@@ -6,8 +6,20 @@
 #define PACMAN_BOARD_H
 
 
-class Board {
+#include <vector>
+#include <string>
+#include "Utilities.h"
 
+
+class Board {
+private:
+    std::vector<std::vector<char>> _board;
+public:
+    Board();
+    Board(unsigned int size);
+    std::string display();
+    void replace(Position position, Characters character);
+    void generateBoard();
 };
 
 
