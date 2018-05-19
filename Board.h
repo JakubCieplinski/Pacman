@@ -18,7 +18,7 @@ public:
     Board();
     Board(unsigned int x, unsigned int y);
     std::string display();
-    bool replace(Position position, Characters character);
+    bool replace(Position position, char character);
     void generateBoard();
 };
 

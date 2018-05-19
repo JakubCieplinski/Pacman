@@ -15,7 +15,7 @@ private:
     Position _playerPosition;
     Characters _playerCharacter = Characters::PACMAN;
 public:
-    void move(KeyCode code);
+    void movePacman(KeyCode code);
     Position getPosition();
     void setPosition(Position direction);
     Player(Position position) : _playerPosition(position){};

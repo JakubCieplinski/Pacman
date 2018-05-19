@@ -5,41 +5,45 @@
 #include "Game.h"
 #include <cstdlib>
 #include <ctime>
-#include <ncurses.h>
 #include <chrono>
 #include <iostream>
+#include <curses.h>
 
-int Game::key = KeyCode::BLANK;
 
-
-Game::Game(unsigned int x, unsigned int y) : _points(0), _thread(readKey) {
+Game::Game(unsigned int x, unsigned int y) : _points(0) {
     _gameBoard = std::make_unique<Board>(Board(x,y));
     std::srand(std::time(nullptr));
     int ix = std::rand() % x;
     int iy = std::rand() % y;
 
-    while(not _gameBoard->replace(Position(ix,iy), Characters::PACMAN))
+    while(not _gameBoard->replace(Position(ix,iy), static_cast<char>(Characters::PACMAN)))
     {
+        std::cout << "\nFinding Position\n";
+        std::cout << "X: " << ix << std::endl;
+        std::cout << "Y: " << iy << std::endl;
         ix = std::rand() % x;
         iy = std::rand() % y;
     }
-
+    std::cout << ix << std::endl << iy << std::endl;
     _player = std::make_unique<Player>(Player(Position(ix,iy)));
 
 }
 
-void
-Game::run() {
+
+void Game::run() {
     std::cout << "\nRunning\n";
     Position oldPlayerPosition{0,0};
     while(1)
     {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+        key = getch();
         if(KeyCode::KEY_ESC == key)
         {
             break;
         }
         oldPlayerPosition = _player->getPosition();
-        _player->move(static_cast<KeyCode>(key));
+        _player->movePacman(static_cast<KeyCode>(key));
         if(not _gameBoard->replace(_player->getPosition(), _player->getPlayerCharacter()))
         {
             break;
@@ -68,7 +72,6 @@ void Game::readKey(){
 
 }
 
-void Game::init() {
-    _thread.join();
-    run();
+Game::~Game() {
+
 }

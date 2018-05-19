@@ -4,7 +4,7 @@
 
 #include "Player.h"
 
-void Player::move(KeyCode code) {
+void Player::movePacman(KeyCode code) {
     switch(code)
     {
         case KeyCode::KEY_A:

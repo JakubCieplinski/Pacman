@@ -3,6 +3,7 @@
 //
 
 #include <sstream>
+#include <iostream>
 #include "Board.h"
 
 Board::Board() {
@@ -15,11 +16,12 @@ Board::Board() {
 }
 
 Board::Board(unsigned int x, unsigned int y) {
-    _board.reserve(y);
-    for(int i = 0; i<_board.size(); ++i)
+    _board.resize(y);
+    for(int i = 0; i <_board.size(); ++i)
     {
-        _board[i].reserve(x);
+        _board[i].resize(x);
     }
+    generateBoard();
 }
 
 std::string Board::display() {
@@ -37,10 +39,13 @@ std::string Board::display() {
     return s.str();
 }
 
-bool Board::replace(Position position, Characters character) {
-    if(position.getY() >=_board.size() || position.getX() >= _board[0].size())
+bool Board::replace(Position position, char character) {
+    if(position.getY() >=_board.size() || position.getX() >= _board[0].size()) {
+//        std::cout << _board[position.getX()][position.getY()] << std::endl;
         return false;
-    if(Characters::WALL != _board[position.getX()][position.getY()]) {
+    }
+    if(Characters::WALL != _board[position.getY()][position.getX()]) {
+//        std::cout << _board[position.getX()][position.getY()] << std::endl;
         _board[position.getY()][position.getX()] = character;
         return true;
     }

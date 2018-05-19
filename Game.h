@@ -16,14 +16,12 @@ private:
     std::unique_ptr<Board> _gameBoard;
     std::unique_ptr<Player> _player;
     int _points;
-    std::thread _thread;
-    static int key;
+    int key = KeyCode::BLANK;
 public:
     Game(unsigned int x, unsigned int y);
+    ~Game();
     void run();
-    static void readKey();
-    void init();
-
+    void readKey();
 
 };
 
