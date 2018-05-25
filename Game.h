@@ -8,20 +8,25 @@
 
 #include <memory>
 #include "Board.h"
-#include "Player.h"
-#include <thread>
+#include "Character.h"
 
 class Game {
 private:
     std::unique_ptr<Board> _gameBoard;
-    std::unique_ptr<Player> _player;
+    std::unique_ptr<Character> _player;
+    Position oldPlayerPosition{0,0};
     int _points;
-    int key = KeyCode::BLANK;
+    int _key = KeyCode::BLANK;
+    int _oldKey = _key;
+    bool _lost;
+    bool _moved = false;
 public:
     Game(unsigned int x, unsigned int y);
     ~Game();
     void run();
-    void readKey();
+    void handleKeyPress();
+    void display();
+    bool isColliding();
 
 };
 

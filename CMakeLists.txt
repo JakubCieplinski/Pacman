@@ -3,4 +3,4 @@ project(Pacman)
 
 set(CMAKE_CXX_FLAGS "--std=c++17 -g -O0 -lpthread -lncurses")
 
-add_executable(Pacman main.cpp Board.cpp Board.h Player.cpp Player.h Utilities.h Game.cpp Game.h )
+add_executable(Pacman main.cpp Board.cpp Board.h Character.cpp Character.h Utilities.h Game.cpp Game.h Pacman.cpp Pacman.h)

@@ -21,20 +21,26 @@ public:
         this->_x+=position.getX();
         this->_y+=position.getY();
     }
+    bool operator==(Position position){
+        return (this->_x == position.getX() && this->_y == position.getY());
+    }
+    bool operator!=(Position position){
+        return (this->_x != position.getX() && this->_y != position.getY());
+    }
 };
 
-enum Characters
+enum class Characters : char
 {
     GHOST = '&', PACMAN = '@', BALL = '*', WALL = '#', EMPTY = ' ', DOOR = '_'
 };
 
 enum KeyCode
 {
-    KEY_A = 0x41,
-    KEY_W = 0x57,
-    KEY_S = 0x53,
-    KEY_D = 0x44,
-    KEY_ESC = 0x1B,
+    KEY_A = 97,
+    KEY_W = 119,
+    KEY_S = 115,
+    KEY_D = 100,
+    KEY_ESC = 27,
     BLANK = 0x00
 };
 #endif //PACMAN_UTILITIES_H

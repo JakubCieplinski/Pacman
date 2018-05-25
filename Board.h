@@ -13,13 +13,14 @@
 
 class Board {
 private:
-    std::vector<std::vector<char>> _board;
+    std::vector<std::string> _board;
 public:
     Board();
     Board(unsigned int x, unsigned int y);
-    std::string display();
+    void display();
     bool replace(Position position, char character);
     void generateBoard();
+    Characters getCharacter(Position position);
 };
 
 

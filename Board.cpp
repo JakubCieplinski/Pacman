@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include "Board.h"
+#include <ncurses.h>
 
 Board::Board() {
     _board.reserve(20);
@@ -16,62 +17,63 @@ Board::Board() {
 }
 
 Board::Board(unsigned int x, unsigned int y) {
-    _board.resize(y);
-    for(int i = 0; i <_board.size(); ++i)
+    _board.reserve(y);
+
+    for(auto& i : _board)
     {
-        _board[i].resize(x);
+        i.reserve(x);
     }
+    /*for(int i = 0; i <_board.size(); ++i)
+    {
+        _board[i].reserve(x);
+    }*/
     generateBoard();
 }
 
-std::string Board::display() {
-    std::ostringstream s;
+void Board::display() {
 
-    for(int i = 0; i<_board.size(); ++i)
+    for(auto it = _board.begin(); it != _board.end(); it++)
     {
-        for(auto& x: _board[i]) {
-            s << x;
-            s << '\t';
-        }
-        s << '\n';
+        auto temp = *it;
+        printw("%s \n", temp.c_str());
     }
 
-    return s.str();
 }
 
 bool Board::replace(Position position, char character) {
-    if(position.getY() >=_board.size() || position.getX() >= _board[0].size()) {
-//        std::cout << _board[position.getX()][position.getY()] << std::endl;
+    if(position.getY() >=_board.size() || position.getX() >= _board[0].size() || position.getY() < 0
+       || position.getX() < 0) {
         return false;
     }
-    if(Characters::WALL != _board[position.getY()][position.getX()]) {
-//        std::cout << _board[position.getX()][position.getY()] << std::endl;
-        _board[position.getY()][position.getX()] = character;
-        return true;
-    }
+    _board[position.getY()][position.getX()] = character;
+
 }
 
 void Board::generateBoard() {
 
-    _board = {{'*','*','*','*','*','*','*','*','#','*','*','*','*'},
-              {'*','#','#','*','#','#','#','*','#','*','#','#','#'},
-              {'*','#','#','*','#','#','#','*','#','*','#','#','#'},
-              {'*','*','*','*','*','*','*','*','*','*','*','*','*'},
-              {'*','#','#','*','#','*','#','#','#','#','#','*','#'},
-              {'*','*','*','*','#','*','*','*','#','*','*','*','#'},
-              {'#','#','#','*','#','#','#','*','#','*','#','#','#'},
-              {' ',' ','#','*','#','*','*','*','*','*','*','*','#'},
-              {'#','#','#','*','#','*','#','#','_','#','#','*','#'},
-              {'*','*','*','*','*','*','#',' ',' ',' ','#','*','*'},
-              {'#','#','#','*','#','*','#','#','#','#','#','*','#'},
-              {' ',' ','#','*','#','*','*','*','*','*','*','*','#'},
-              {'#','#','#','*','#','*','#','#','#','#','#','*','#'},
-              {'*','*','*','*','*','*','*','*','#','*','*','*','*'},
-              {'*','#','#','*','#','#','#','*','#','*','#','#','#'},
-              {'*','*','#','*','*','*','*','*','*','*','*','*','*'},
-              {'#','*','#','*','#','*','#','#','#','#','#','*','*'},
-              {'*','*','*','*','#','*','*','*','#','*','*','*','*'},
-              {'*','#','#','#','#','#','#','*','#','*','#','#','#'},
-              {'*','*','*','*','*','*','*','*','*','*','*','*','*'}};
+    _board = {"********#****",
+              "*##*###*#*###",
+              "*##*###*#*###",
+              "*************",
+              "*##*#*#####*#",
+              "****#***#***#",
+              "###*###*#*###",
+              "  #*#*******#",
+              "###*#*##_##*#",
+              "******#   #**",
+              "###*#*#####*#",
+              "  #*#*******#",
+              "###*#*#####*#",
+              "********#****",
+              "*##*###*#*###",
+              "**#**********",
+              "#*#*#*#####**",
+              "****#***#****",
+              "*######*#*###",
+              "*************"};
 
+}
+
+Characters Board::getCharacter(Position position) {
+    return static_cast<Characters>(_board[position.getY()][position.getX()]);
 }
